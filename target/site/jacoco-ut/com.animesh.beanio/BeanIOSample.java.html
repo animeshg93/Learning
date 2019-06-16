@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BeanIOSample.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Learning</a> &gt; <a href="index.source.html" class="el_package">com.animesh.beanio</a> &gt; <span class="el_source">BeanIOSample.java</span></div><h1>BeanIOSample.java</h1><pre class="source lang-java linenums">package com.animesh.beanio;
+
+import java.io.StringWriter;
+
+import org.beanio.BeanWriter;
+import org.beanio.StreamFactory;
+import org.beanio.builder.FixedLengthParserBuilder;
+import org.beanio.builder.StreamBuilder;
+
+<span class="nc" id="L10">public class BeanIOSample {</span>
+	public void readCSVFileUsingBeanIo() {
+<span class="nc" id="L12">		StreamFactory factory = StreamFactory.newInstance();</span>
+<span class="nc" id="L13">		StringWriter writer = new StringWriter();</span>
+<span class="nc" id="L14">		StreamBuilder builder = new StreamBuilder(&quot;person&quot;).format(&quot;fixedlength&quot;)</span>
+<span class="nc" id="L15">				.parser(new FixedLengthParserBuilder().recordTerminator(&quot;\n&quot;)).addRecord(Contact.class)</span>
+<span class="nc" id="L16">				.ignoreUnidentifiedRecords();</span>
+<span class="nc" id="L17">		factory.define(builder);</span>
+
+<span class="nc" id="L19">		BeanWriter out = factory.createWriter(&quot;person&quot;, writer);</span>
+<span class="nc" id="L20">		Contact c = makeContact();</span>
+<span class="nc" id="L21">		out.write(c);</span>
+
+<span class="nc" id="L23">		out.flush();</span>
+<span class="nc" id="L24">		out.close();</span>
+<span class="nc" id="L25">	}</span>
+
+	private Contact makeContact() {
+<span class="nc" id="L28">		Contact c = new Contact();</span>
+<span class="nc" id="L29">		c.setCity(&quot;Alabama&quot;);</span>
+<span class="nc" id="L30">		c.setFirstName(&quot;Animesh&quot;);</span>
+<span class="nc" id="L31">		c.setLastName(&quot;Gandhi&quot;);</span>
+<span class="nc" id="L32">		c.setState(&quot;GA&quot;);</span>
+<span class="nc" id="L33">		c.setStreet(&quot;Main St&quot;);</span>
+<span class="nc" id="L34">		c.setZip(&quot;8524&quot;);</span>
+<span class="nc" id="L35">		return c;</span>
+	}
+
+	public static void main(String[] args) {
+<span class="nc" id="L39">		BeanIOSample sample = new BeanIOSample();</span>
+<span class="nc" id="L40">		long start = System.currentTimeMillis();</span>
+<span class="nc" id="L41">		sample.readCSVFileUsingBeanIo();</span>
+<span class="nc" id="L42">		long end = System.currentTimeMillis();</span>
+<span class="nc" id="L43">		System.out.println(&quot;TIME TAKEN &gt;&gt;&gt; &quot; + (end - start));</span>
+<span class="nc" id="L44">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
